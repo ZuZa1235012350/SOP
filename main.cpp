@@ -9,23 +9,21 @@
 using namespace std;
 
 auto cat_to_stdout(string const path) -> void {
-	//trzeba c_str(), zeby sie zgadzalo z tym co jest w dokumentacji open
-	//to "translacja" na C
 	auto const in_fd = open(path.c_str(), O_RDONLY);
 	if(in_fd == -1){
 		return;
 	}
-	//trzeba stworzyc bufor do read)
+
 	array<char, 4096> buf{0};
 	auto flag = true;
 	while(flag){
-		//buf.data() --> przekazuje wskaznik na bufor
+	
 		auto const bytes_in = read(in_fd, buf.data(), buf.size());
 		if(bytes_in == -1){
-			break; //error
+			break; 
 		}
 		if(bytes_in == 0){
-			break; //end of file
+			break; 
 		}
 		
 		auto const bytes_out = write(1, buf.data(), bytes_in);
